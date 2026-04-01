@@ -1,0 +1,83 @@
+<div class="app-shell">
+  <header class="app-header">
+    <h1>Gestão de Benefícios</h1>
+    <div *ngIf="message" class="alert" [ngClass]="messageType === 'success' ? 'alert-success' : (messageType === 'error' ? 'alert-error' : '')">
+      {{ message }}
+      <button class="close" type="button" (click)="message=''; messageType=''">×</button>
+    </div>
+  </header>
+
+  <section class="pane">
+    <h2>Benefícios Cadastrados</h2>
+    <div class="table-wrap" *ngIf="beneficios.length; else emptyState">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let b of beneficios">
+            <td>{{ b.id }}</td>
+            <td>{{ b.nome }}</td>
+            <td>{{ b.descricao }}</td>
+            <td>{{ b.valor | currency:'BRL' }}</td>
+            <td>{{ b.ativo ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="deleteId(b.id!)">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #emptyState>
+      <p class="empty">Nenhum benefício cadastrado. Cadastre acima para começar.</p>
+    </ng-template>
+  </section>
+
+  <section class="pane form-grid">
+    <article class="card">
+      <h2>Criar Benefício</h2>
+      <label>
+        Nome
+        <input type="text" [(ngModel)]="novo.nome" placeholder="Nome do benefício" />
+      </label>
+      <label>
+        Descrição
+        <input type="text" [(ngModel)]="novo.descricao" placeholder="Descrição" />
+      </label>
+      <label>
+        Valor
+        <input type="number" [(ngModel)]="novo.valor" placeholder="0.00" />
+      </label>
+      <div class="action-row">
+        <button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
+        <button type="button" class="btn btn-secondary" (click)="novo = { nome: '', descricao: '', valor: 0, ativo: true }">Limpar</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Transferência</h2>
+      <label>
+        Origem (ID)
+        <input type="number" [(ngModel)]="transfer.fromId" placeholder="ID de origem" />
+      </label>
+      <label>
+        Destino (ID)
+        <input type="number" [(ngModel)]="transfer.toId" placeholder="ID de destino" />
+      </label>
+      <label>
+        Valor
+        <input type="number" [(ngModel)]="transfer.amount" placeholder="0.00" />
+      </label>
+      <div class="action-row">
+        <button type="button" class="btn btn-warning" (click)="transferir()">Transferir</button>
+      </div>
+    </article>
+  </section>
+</div>

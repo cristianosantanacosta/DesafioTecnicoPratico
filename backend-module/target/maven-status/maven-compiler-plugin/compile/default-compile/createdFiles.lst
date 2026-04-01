@@ -1,0 +1,9 @@
+com\example\backend\controller\BeneficioController.class
+com\example\backend\controller\GlobalExceptionHandler.class
+com\example\backend\repository\BeneficioRepository.class
+com\example\backend\service\BeneficioService.class
+com\example\backend\BackendApplication.class
+com\example\backend\controller\BeneficioController$TransferRequest.class
+com\example\ejb\BeneficioEjbService.class
+com\example\backend\model\Beneficio.class
+com\example\backend\config\OpenApiConfig.class

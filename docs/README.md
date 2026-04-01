@@ -41,3 +41,40 @@ Criar solução completa em camadas (DB, EJB, Backend, Frontend), corrigindo bug
 - Testes (15%)
 - Documentação (10%)
 - Frontend (10%)
+
+## Como rodar a solução
+
+1. Compilar e executar backend (Spring Boot + H2 in-memory):
+   - `cd backend-module`
+   - `mvn clean package`
+   - `mvn spring-boot:run`
+2. API disponível em `http://localhost:8080/api/v1/beneficios`
+3. OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+4. Swagger UI: `http://localhost:8080/swagger-ui.html`
+5. Frontend Angular:
+   - `cd frontend`
+   - `npm install`
+   - `npm start`
+   - Acessar `http://localhost:4200`
+
+## 🧪 Testes
+
+- `cd backend-module`
+- `mvn test`
+
+## 🐞 Correção do bug EJB
+
+Implementado em `ejb-module/src/main/java/com/example/ejb/BeneficioEjbService.java`:
+- validações de ids, valor, mesma conta, saldo insuficiente
+- bloqueio PESSIMISTIC_WRITE para evitar lost update / concorrência
+- rollback automático em exceções Runtime
+
+## 🛠️ Integração
+
+- `backend-module` utiliza `BeneficioEjbService` para regras de transferência.
+- Camadas:
+  - DB: `backend-module/src/main/resources/schema.sql` e `data.sql`
+  - EJB: `ejb-module` com entidade e serviço de negócio
+  - Backend: Spring REST + JPA
+  - Frontend: Angular HTTP consumer
+
